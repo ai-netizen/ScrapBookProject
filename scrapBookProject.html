@@ -1,0 +1,453 @@
+<!--
+Project Title: CTRL + Scrap – Digital Scrapbook Website
+
+Project Description:
+CTRL + Scrap is a digital scrapbook website designed to help users preserve and organize their memorable moments in an online format. 
+The website displays memories using a structured card layout that includes images, titles, short descriptions, and dates. 
+This allows users to visually browse and revisit important personal experiences. 
+The page also includes a simple guide section that demonstrates how lists and structured text can be used to explain instructions for adding and managing memories.
+
+Developer: Aira S. Jayoma
+Course and Section: BSCS 3-1
+Subject: COMP 016 – Web Development
+Professor: Yuzef Ezeckiel Esparrago
+-->
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Browser tab title -->
+<title>CTRL + Scrap | Digital Scrapbook</title>
+
+<style>
+
+    /* ==================================================
+       GLOBAL PAGE SETTINGS
+       Applies general layout and background styling
+       to the entire webpage.
+    ================================================== */
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #ffd6e7;
+    }
+
+    /* ==================================================
+       HEADER COMPONENT
+       Displays:
+       - Logo
+       - Project title
+       - Tagline
+       - Add Memory button
+    ================================================== */
+    header {
+        background: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+    }
+
+    /* Logo + title container */
+    .logo-area {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    /* Project logo styling */
+    .logo-img {
+        width: 60px;
+        height: auto;
+    }
+
+    /* Main website title */
+    .title-area h1 {
+        margin: 0;
+        font-size: 28px;
+        color: black;
+    }
+
+    /* Tagline under the title */
+    .title-area h2 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: normal;
+        color: black;
+    }
+
+    /* Add Memory button (future feature) */
+    .add-button {
+        background: black;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        border: none;
+    }
+
+    .add-button h2 {
+        margin: 0;
+        font-size: 16px;
+        color: white;
+    }
+
+    /* ==================================================
+       TOOLBAR SECTION
+       Provides sorting options for scrapbook entries.
+    ================================================== */
+    .toolbar {
+        display: flex;
+        justify-content: flex-start;
+        padding: 20px 40px 0 40px;
+    }
+
+    .sort-container {
+        background-color: #333;
+        padding: 8px 15px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Sort button styling */
+    .sort-btn {
+        background: transparent;
+        border: none;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    /* ==================================================
+       MAIN CONTENT AREA
+       Holds scrapbook grid and instructional guide.
+    ================================================== */
+    main {
+        padding: 20px 40px 40px 40px;
+    }
+
+    /* ==================================================
+       SCRAPBOOK MEMORY GRID
+       Displays memory cards using CSS Grid.
+       Layout: 3 cards per row
+    ================================================== */
+    .scrapbook-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+    }
+
+    /* ==================================================
+       MEMORY CARD COMPONENT
+       Each card contains:
+       - Image
+       - Title
+       - Description
+       - Date
+       - Interaction icons
+    ================================================== */
+    .memory-card {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Memory image */
+    .photo-placeholder {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    /* Memory title */
+    .memory-card h2 {
+        margin: 15px 0 5px;
+        font-size: 20px;
+    }
+
+    /* Memory description */
+    .memory-card h3 {
+        margin: 0;
+        color: darkgray;
+        font-size: 15px;
+        font-weight: normal;
+        line-height: 1.4;
+    }
+
+    /* Date row container */
+    .date-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 12px;
+    }
+
+    /* Small icons (calendar) */
+    .icon-small {
+        width: 18px;
+        height: 18px;
+        opacity: 0.6;
+    }
+
+    /* Date text */
+    .date-text {
+        color: darkgray;
+        font-size: 14px;
+    }
+
+    /* ==================================================
+       INTERACTION SECTION
+       Icons for like and comment features.
+    ================================================== */
+    .interaction-icons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+        margin-top: auto;
+        padding-top: 15px;
+    }
+
+    .icon-action {
+        width: 22px;
+        height: 22px;
+        opacity: 0.6;
+        cursor: pointer;
+    }
+
+    /* ==================================================
+       USER GUIDE COMPONENT
+       Provides instructions for using the scrapbook.
+    ================================================== */
+    .guide {
+        margin-top: 50px;
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+    }
+
+    .guide p {
+        line-height: 1.6;
+    }
+
+    /* ==================================================
+       FOOTER SECTION
+       Displays credits or closing message.
+    ================================================== */
+    footer {
+        background: white;
+        text-align: center;
+        padding: 30px;
+        margin-top: 40px;
+    }
+
+</style>
+<!-- ==================================================
+     HEADER
+     Displays logo, title, tagline, and add memory button.
+================================================== -->
+<header>
+
+    <div class="logo-area">
+        <img src="scrapbook_logo.png" alt="Scrapbook Logo" class="logo-img">
+
+        <div class="title-area">
+            <h1>CTRL + Scrap</h1>
+            <h2>Scroll less, remember more</h2>
+        </div>
+    </div>
+
+    <button class="add-button">
+        <h2>+ Add Memory</h2>
+    </button>
+
+</header>
+
+<!-- ==================================================
+     SORTING TOOLBAR
+     Controls how memories are organized.
+================================================== -->
+<div class="toolbar">
+    <div class="sort-container">
+
+        <button class="sort-btn">
+            <img src="calendar.png" class="icon-small" style="filter: invert(1);" alt="date">
+            <span>Sort by date</span>
+            <span>▼</span>
+        </button>
+
+        <button class="sort-btn">
+            <span>Order</span>
+            <span>▼</span>
+        </button>
+
+    </div>
+</div>
+
+<!-- ==================================================
+     MAIN PAGE CONTENT
+================================================== -->
+
+    <main>
+        <section class="scrapbook-grid">
+            
+            <div class="memory-card">
+                <img src="beach.jpg" alt="Beach Sunset" class="photo-placeholder">
+                <h2>Beach Sunset</h2>
+                <h3>My silhoutte behind sunset in the dolomite beach.</h3>
+                <div class="date-row">
+                    <img src="calendar.png" class="icon-small" alt="calendar">
+                    <p class="date-text">February 5, 2026</p>
+                </div>
+                <div class="interaction-icons">
+                    <img src="heart.png" class="icon-action" alt="like">
+                    <img src="instagram-comment.png" class="icon-action" alt="comment">
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <img src="coffeedate.jpg" alt="Coffee Date" class="photo-placeholder">
+                <h2>Coffee Shop Date</h2>
+                <h3>Quality time with special someone after a tiring day.</h3>
+                <div class="date-row">
+                    <img src="calendar.png" class="icon-small" alt="calendar">
+                    <p class="date-text">Feb 27, 2026</p>
+                </div>
+                <div class="interaction-icons">
+                    <img src="heart.png" class="icon-action" alt="like">
+                    <img src="instagram-comment.png" class="icon-action" alt="comment">
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <img src="outing.jpg" alt="Swimming" class="photo-placeholder">
+                <h2>Overnight Swimming in Rizal</h2>
+                <h3>My first overnight hangout with blockmates.</h3>
+                <div class="date-row">
+                    <img src="calendar.png" class="icon-small" alt="calendar">
+                    <p class="date-text">January 22, 2026</p>
+                </div>
+                <div class="interaction-icons">
+                    <img src="heart.png" class="icon-action" alt="like">
+                    <img src="instagram-comment.png" class="icon-action" alt="comment">
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <img src="flowers.jpg" alt="Valentines" class="photo-placeholder">
+                <h2>Valentines under the City Lights</h2>
+                <h3>Pasig river esplanade with my first flower.</h3>
+                <div class="date-row">
+                    <img src="calendar.png" class="icon-small" alt="calendar">
+                    <p class="date-text">February 19, 2026</p>
+                </div>
+                <div class="interaction-icons">
+                    <img src="heart.png" class="icon-action" alt="like">
+                    <img src="instagram-comment.png" class="icon-action" alt="comment">
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <img src="hobbies.jpg" alt="Plushies" class="photo-placeholder">
+                <h2>My plushies collection</h2>
+                <h3>A snap of my hobbies and interest</h3>
+                <div class="date-row">
+                    <img src="calendar.png" class="icon-small" alt="calendar">
+                    <p class="date-text">April 3, 2025</p>
+                </div>
+                <div class="interaction-icons">
+                    <img src="heart.png" class="icon-action" alt="like">
+                    <img src="instagram-comment.png" class="icon-action" alt="comment">
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <img src="friends.jpg" alt="Friends" class="photo-placeholder">
+                <h2>Friends for keeps</h2>
+                <h3>Reunion worth every seconds with my highschool friends.</h3>
+                <div class="date-row">
+                    <img src="calendar.png" class="icon-small" alt="calendar">
+                    <p class="date-text">Feb 05, 2025</p>
+                </div>
+                <div class="interaction-icons">
+                    <img src="heart.png" class="icon-action" alt="like">
+                    <img src="instagram-comment.png" class="icon-action" alt="comment">
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <img src="concert.jpg" alt="Concert" class="photo-placeholder">
+                <h2>First Concert Festival</h2>
+                <h3>Lights, music, and unforgettable energy.</h3>
+                <div class="date-row">
+                    <img src="calendar.png" class="icon-small" alt="calendar">
+                    <p class="date-text">February 22, 2025</p>
+                </div>
+                <div class="interaction-icons">
+                    <img src="heart.png" class="icon-action" alt="like">
+                    <img src="instagram-comment.png" class="icon-action" alt="comment">
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ======================================================
+             GUIDE SECTION
+             Instructions for users on how to use the scrapbook
+        ======================================================= -->
+        <section class="guide">
+
+            <h2>Ways to Use Your Scrapbook</h2>
+
+            <p>This digital scrapbook helps you store and organize your favorite memories effectively.</p>
+
+            <ul>
+                <li>Store your favorite memories</li>
+                <li>Save special events</li>
+            </ul>
+
+            <h2>How to Add a Memory</h2>
+
+            <p>Follow these steps to add a new scrapbook memory to your collection.</p>
+
+            <ol>
+                <li>Click the "Add Memory" button to input your first memory</li>
+                <li>Select a photo you want to upload</li>
+                <li>Write a short description of the memory</li>
+
+                <li>
+                    Add the details:
+                    <ul>
+                        <li>Input the exact date of the event</li>
+                        <li>Tag the location if necessary</li>
+                        <li>Click the "save" button</li>
+                    </ul>
+                </li>
+            </ol>
+
+        </section>
+
+    </main>
+
+    <!-- ======================================================
+         FOOTER
+         Displays closing message/credit
+    ======================================================= -->
+    <footer>
+        <h3>Made with 💗 to preserve precious momments</h3>
+    </footer>
+
+</body>
+
+</html>
